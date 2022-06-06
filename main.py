@@ -237,12 +237,12 @@ def receive_data():
     phone_from = request.form['phone']
     message_from = request.form['message']
     print(name_from, email_from, phone_from, message_from)
-    # with smtplib.SMTP("smtp.gmail.com") as connection:
-    # connection.starttls()
-    # connection.login(user=my_email, password=password)
-    # connection.sendmail(from_addr=my_email, to_addrs=my_email,
-    #                     msg=f"Subject: Message from Blog\n\n{name_from} phone: {phone_from},"
-    #                         f" email: {email_from} sent you this message:\n{message_from}")
+    with smtplib.SMTP("smtp.gmail.com") as connection:
+        connection.starttls()
+        connection.login(user='pythontest100days@gmail.com', password=os.environ.get('MAILPASSWORD'))
+        connection.sendmail(from_addr='pythontest100days@gmail.com', to_addrs='almasanmihai@yahoo.com',
+                            msg=f"Subject: Message from Blog\n\n{name_from} phone: {phone_from},"
+                                f" email: {email_from} sent you this message:\n{message_from}")
     return render_template("contact.html", contact_me="Your message was sent.")
 
 
