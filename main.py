@@ -159,13 +159,10 @@ def show_post(post_id):
         if not current_user.is_authenticated:
             flash('You need to login or register to comment.')
             return redirect(url_for('login'))
-        new_comment = Comment(
-            text=comment_form.comment.data,
-            comment_author=current_user,
-            parent_post=requested_post
-        )
-        db.session.add(new_comment)
-        db.session.commit()
+        else:
+            new_comment = Comment(text=comment_form.comment.data, comment_author=current_user, parent_post=requested_post)
+            db.session.add(new_comment)
+            db.session.commit()
     return render_template("post.html", post=requested_post, form=comment_form)
 
 
