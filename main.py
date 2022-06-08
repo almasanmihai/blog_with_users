@@ -94,7 +94,6 @@ def admin_only(func):
             return func(*args, **kwargs)
         else:
             return abort(403)
-
     return decorated_function
 
 
@@ -122,9 +121,8 @@ def register():
             login_user(new_user)
             return redirect(url_for('get_all_posts'))
         else:
-            flash("You've allready signed up with that email. Login, instead.")
+            flash("You've already signed up with that email. Login, instead.")
             return redirect(url_for('login'))
-
     return render_template("register.html", form=form)
 
 
