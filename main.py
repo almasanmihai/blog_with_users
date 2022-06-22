@@ -12,7 +12,6 @@ from functools import wraps
 import smtplib
 import os
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'axsf432werrkjjkl')
 ckeditor = CKEditor(app)
@@ -81,7 +80,7 @@ class Comment(db.Model):
     text = db.Column(db.Text, nullable=False)
 
 
-db.create_all()
+# db.create_all()
 
 
 # ----Decorator for add_new_post, edit_post si delete----
@@ -94,6 +93,7 @@ def admin_only(func):
             return func(*args, **kwargs)
         else:
             return abort(403)
+
     return decorated_function
 
 
@@ -160,7 +160,8 @@ def show_post(post_id):
             flash('You need to login or register to comment.')
             return redirect(url_for('login'))
         else:
-            new_comment = Comment(text=comment_form.comment.data, comment_author=current_user, parent_post=requested_post)
+            new_comment = Comment(text=comment_form.comment.data, comment_author=current_user,
+                                  parent_post=requested_post)
             db.session.add(new_comment)
             db.session.commit()
     return render_template("post.html", post=requested_post, form=comment_form)
